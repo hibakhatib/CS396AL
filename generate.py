@@ -27,35 +27,22 @@ def Create_World():
     
 def Create_Simple():
     pyrosim.Start_URDF("simple.urdf")
-    pyrosim.Send_Cube(name = "Torso", pos = [1,1.5,1.5], size=[length,width,height])
-    pyrosim.Send_Joint( name = "Torso_Backleg" , parent= "Torso" , child = "Backleg" , type = "revolute", position = [0,1.5,0])
-    pyrosim.Send_Cube(name = "Backleg", pos = [0, 0, .5], size=[length,width,height])
-    pyrosim.Send_Joint( name = "Torso_Frontleg" , parent= "Torso" , child = "Frontleg" , type = "revolute", position = [0,1.5,0])
-    pyrosim.Send_Cube(name = "Frontleg", pos = [2, 0, .5], size=[length,width,height])
+    pyrosim.Send_Cube(name = "Torso", pos = [1.5,0,1.5], size=[length,width,height])
+    pyrosim.Send_Joint( name = "Torso_Backleg" , parent= "Torso" , child = "Backleg" , type = "revolute", position = [1,0,1])
+    pyrosim.Send_Cube(name = "Backleg", pos = [-.5, 0, -.5], size=[length,width,height])
+    pyrosim.Send_Joint( name = "Torso_Frontleg" , parent= "Torso" , child = "Frontleg" , type = "revolute", position = [2,0,1])
+    pyrosim.Send_Cube(name = "Frontleg", pos = [0.5, 0, -.5], size=[length,width,height])
     pyrosim.End()
     
     
     
     
-    
-    
-    
-    
-def Create_Robot2():
-    pyrosim.Start_URDF("r.urdf")
-    pyrosim.Send_Cube(name="Link0", pos=[3,0,0.5] , size=[length,width,height])
-    pyrosim.Send_Joint( name = "Link0_Link1" , parent= "Link0" , child = "Link1" , type = "revolute", position = [0,0,11000])
-    pyrosim.Send_Cube(name="Link1", pos=[1,0,0.5] , size=[length,width,height])
-    pyrosim.Send_Joint( name = "Link1_Link2" , parent= "Link1" , child = "Link2" , type = "revolute", position = [0,0,-1])
-    pyrosim.Send_Cube(name="Link2", pos=[2,0,0.5] , size=[length,width,height])
-    pyrosim.End()
+
 
 #pyrosim.Send_Cube(name="Box2", pos=[0,1,1] , size=[length,width,height])
 #pyrosim.Send_Cube(name="Box3", pos=[0,0,0] , size=[length,width,height])
 
 Create_World()
-Create_Robot2()
-
 
 Create_Simple()
 
