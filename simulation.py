@@ -20,8 +20,9 @@ class SIMULATION:
         
     def Run(self):
         for i in range(1000):
-            ROBOT.Sense(self, i)
-            ROBOT.Act(self, i)
+            self.robot.Sense(i)
+            self.robot.Think()
+            self.robot.Act(i)
             p.stepSimulation()          
             time.sleep(1/60)
             

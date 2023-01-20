@@ -2,6 +2,7 @@ import pybullet as p
 import pyrosim as pyrosim
 from sensor import SENSOR
 from motor import MOTOR 
+from pyrosim.neuralNetwork import NEURAL_NETWORK
 
 
 class ROBOT:
@@ -9,6 +10,7 @@ class ROBOT:
         self.motors = {}
         self.sensors = {}
         self.robotId = p.loadURDF("simple.urdf")
+        self.nn = NEURAL_NETWORK("brain.nndf")
         #pyrosim.Prepare_To_Simulate(self.robotId)
         
     def Prepare_to_sense(self):
@@ -16,7 +18,6 @@ class ROBOT:
             self.sensors[linkName] = SENSOR(linkName)
     
     def Sense(self,i):
-        self.sensors = {}
         for sensor in self.sensors:
             self.sensors[sensor].Get_Value(i)
         # for t in range(1000):
@@ -24,19 +25,20 @@ class ROBOT:
         #         SENSOR.Get_value(i)
         #     t = t + 1
             
-    def Get_Value(self, i):
-        self.values = {}
-        self.values[i] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-        
     def Prepare_To_Act(self):
         self.joints = {}
         for jointName in pyrosim.jointNamesToIndices:
             self.sensors[jointName] = SENSOR(jointName)
             
     def Act(self,i):
-        self.motors = {}
+        # self.motors = {}
         for motor in self.motors:
             self.motors[motor].Set_Value(self.robotId, i)
+            
+    def Think(self):
+        self.nn.Update()
+        self.nn.Print()
+ 
             
         
         
