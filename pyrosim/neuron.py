@@ -50,6 +50,8 @@ class NEURON:
     def Update_Hidden_Or_Motor_Neuron(self):
         self.Set_Value(math.pi/4)
         
+        # change the 0 to math.pi/4 to record the video for task I
+        
  
     
     def Is_Hidden_Neuron(self):
