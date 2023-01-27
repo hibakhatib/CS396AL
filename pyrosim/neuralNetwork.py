@@ -1,3 +1,4 @@
+
 from pyrosim.neuron  import NEURON
 
 from pyrosim.synapse import SYNAPSE
@@ -27,25 +28,27 @@ class NEURAL_NETWORK:
         self.Print_Motor_Neuron_Values()
 
         print("")
-        
+
     def Update(self):
-        for i in self.neurons.keys():
-            if self.neurons[i].Is_Sensor_Neuron():
-                self.neurons[i].Update_Sensor_Neuron()
-            else:
-                self.neurons[i].Update_Hidden_Or_Motor_Neuron()
-    
+        for neuronName in self.neurons:
+            if self.neurons[neuronName].Is_Sensor_Neuron():
+                self.neurons[neuronName].Update_Sensor_Neuron()
+            else: 
+                ## This else clause will trigger if the current neuron is not a sensor neuron: 
+                    ## that is, it is a hidden or motor neuron.
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron()
+
     def Get_Neuron_Names(self):
         return self.neurons.keys()
-    
-    def Is_Motor_Neuron(self, neuron):
-        self.neurons[neuron].Is_Motor_Neuron()
-    
-    def Get_Motor_Neurons_Joint(self, neuron):
-        self.neurons[neuron].Get_Joint_Name()
-        
-    def Get_Value_Of(self, neuron):
-        self.neurons[neuron].Get_Value()
+
+    def Is_Motor_Neuron(self, neuronName):
+        return self.neurons[neuronName].Is_Motor_Neuron()
+
+    def Get_Motor_Neurons_Joint(self, neuronName):
+        return self.neurons[neuronName].Get_Joint_Name()
+
+    def Get_Value_Of(self, neuronName):
+        return self.neurons[neuronName].Get_Value()
 
 # ---------------- Private methods --------------------------------------
 
