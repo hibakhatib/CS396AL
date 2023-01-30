@@ -2,6 +2,7 @@
 import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import time
+import random
 
 
 def Create_World():
@@ -33,8 +34,20 @@ def Generate_Brain():
 			pyrosim.Send_Synapse( sourceNeuronName = 2 , targetNeuronName = 4 , weight = 1 )
    
 			pyrosim.End()
+   
+
+def Neural_Network():
+    pyrosim.Start_NeuralNetwork("network.nndf")
+    for sensor in range(3):
+        for motor in range(3,5):
+            pyrosim.Send_Synapse(sourceNeuronName=sensor, targetNeuronName=motor, weight = 1 + 2*random.randint(0, 1))
+    
+    pyrosim.End()
+    
 
 
 Create_World()
 Generate_Body()
 Generate_Brain()
+Neural_Network()
+ 
