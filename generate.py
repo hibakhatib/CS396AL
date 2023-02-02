@@ -32,22 +32,20 @@ def Generate_Brain():
 			pyrosim.Send_Synapse( sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1 )
 			pyrosim.Send_Synapse( sourceNeuronName = 1 , targetNeuronName = 4 , weight = 1 )
 			pyrosim.Send_Synapse( sourceNeuronName = 2 , targetNeuronName = 4 , weight = 1 )
-   
+			# for currentRow in range(3):
+			# 	for currentCol in range(2):
+			# 		pyrosim.Send_Synapse(sourceNeuronName= currentRow, targetNeuronName= currentCol+3, weight = self.weights[currentRow][currentCol])
 			pyrosim.End()
    
 
-def Neural_Network():
-    pyrosim.Start_NeuralNetwork("network.nndf")
-    for sensor in range(3):
-        for motor in range(3,5):
-            pyrosim.Send_Synapse(sourceNeuronName=sensor, targetNeuronName=motor, weight = 1 + 2*random.randint(0, 1))
-    
-    pyrosim.End()
-    
+# def Neural_Network():
+#     pyrosim.Start_NeuralNetwork("network.nndf")
 
+#     pyrosim.End()
+    
 
 Create_World()
 Generate_Body()
 Generate_Brain()
-Neural_Network()
+
  

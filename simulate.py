@@ -7,14 +7,18 @@
 # import constants as c
 
 from simulation import SIMULATION
-
+import sys
 
 #see step 53
 # physicsClient = p.connect(p.GUI)
 # p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-simulation = SIMULATION()
+directOrGUI = sys.argv[1]
+simulation = SIMULATION(directOrGUI)
 simulation.Run()
+simulation.Get_Fitness()
+
+
 
 
 # robotId = p.loadURDF("simple.urdf")
