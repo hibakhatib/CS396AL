@@ -6,8 +6,10 @@
 #     os.system("python generate.py")
 #     os.system("python simulate.py")
 
-from hillclimber import HILLCLIMBER 
 
-hc = HILLCLIMBER()
-hc.Evolve()
+
+from parallelHillClimber import PARALLEL_HILL_CLIMBER
+
+phc = PARALLEL_HILL_CLIMBER()
+phc.Evolve()
 

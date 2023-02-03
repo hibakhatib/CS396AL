@@ -2,24 +2,34 @@ import numpy as np
 import pyrosim.pyrosim as pyrosim
 import os
 import random 
+import time
 
 
 
 class SOLUTION:
-    def __init__(self):
+    def __init__(self, nextAvailableID):
         self.weights = np.random.rand(3,2) * 2 - 1
         #self.weights = (self.weights * 2) -1
         self.fitness = 0
+        self.myID = nextAvailableID
         
-    def Evaluate(self, string):
+    def Start_Simulation(self, directOrGUI):
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        os.system("python simulate.py " + string)
-        fitnessFile = open("fitness.txt", "r")
+        os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+        
+    def Wait_For_Simulation_To_End(self):
+        fitFile = "fitness" + str(self.myID) + ".txt"
+        while not os.path.exists(fitFile):
+            time.sleep(1/100)
+        
+        fitnessFile = open(fitFile, "r")
         fit = fitnessFile.read()
         self.fitness = float(fit)
- 
+        os.system("rm " + fitFile)
+        
+        
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
         pyrosim.Send_Cube(name="Box", pos=[-2,-2,0.5] , size=[1,1,1])
@@ -60,6 +70,9 @@ class SOLUTION:
         row = random.randint(0,2)
         col = random.randint(0,1)
         self.weights[row, col] = random.random() * 2 -1
+    
+    def Set_ID(self, id):
+        self.myID = id
         
         
         
