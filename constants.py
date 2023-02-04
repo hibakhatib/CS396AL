@@ -16,4 +16,4 @@ b = numpy.linspace(0, 2*numpy.pi, 1000)
 backLegSensorValues = numpy.zeros(1000)
 frontLegSensorValues = numpy.zeros(1000)
 
-numberOfGenerations = 10
+numberOfGenerations = 5

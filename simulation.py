@@ -12,12 +12,14 @@ from robot import ROBOT
 
 class SIMULATION:
     def __init__(self, directOrGUI, solutionID):
+        self.directOrGUI = directOrGUI
+        
         if directOrGUI == "DIRECT":
             self.physicsClient = p.connect(p.DIRECT)
         else:
             self.physicsClient = p.connect(p.GUI)
             
-        self.directOrGUI = directOrGUI
+        
         self.solutionID = solutionID
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,-9.8) 
@@ -27,9 +29,8 @@ class SIMULATION:
         
     
     def Run(self):
-        sleep = 0
         if self.directOrGUI == "GUI":
-            sleep = 1/100
+            time.sleep(1/1000)
         for i in range(1000):
             p.stepSimulation() 
             self.robot.Sense(i)

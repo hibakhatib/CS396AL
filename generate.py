@@ -1,5 +1,4 @@
 
-import pybullet as p
 import pyrosim.pyrosim as pyrosim
 import time
 import random
@@ -32,9 +31,9 @@ def Generate_Brain():
 			pyrosim.Send_Synapse( sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1 )
 			pyrosim.Send_Synapse( sourceNeuronName = 1 , targetNeuronName = 4 , weight = 1 )
 			pyrosim.Send_Synapse( sourceNeuronName = 2 , targetNeuronName = 4 , weight = 1 )
-			# for currentRow in range(3):
-			# 	for currentCol in range(2):
-			# 		pyrosim.Send_Synapse(sourceNeuronName= currentRow, targetNeuronName= currentCol+3, weight = self.weights[currentRow][currentCol])
+			for currentRow in range(3):
+				for currentCol in range(2):
+					pyrosim.Send_Synapse(sourceNeuronName= currentRow, targetNeuronName= currentCol+3, weight = random.uniform(-1,1))
 			pyrosim.End()
    
 

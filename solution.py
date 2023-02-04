@@ -10,7 +10,7 @@ class SOLUTION:
     def __init__(self, nextAvailableID):
         self.weights = np.random.rand(3,2) * 2 - 1
         #self.weights = (self.weights * 2) -1
-        self.fitness = 0
+        # self.fitness = 0
         self.myID = nextAvailableID
         
     def Start_Simulation(self, directOrGUI):
@@ -27,7 +27,8 @@ class SOLUTION:
         fitnessFile = open(fitFile, "r")
         fit = fitnessFile.read()
         self.fitness = float(fit)
-        os.system("rm " + fitFile)
+        fitnessFile.close()
+        os.system("del " + fitFile)
         
         
     def Create_World(self):
@@ -45,7 +46,7 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Brain(self):
-            pyrosim.Start_NeuralNetwork("brain.nndf")
+            pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
             pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
             pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLeg")
             pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "FrontLeg")
@@ -63,7 +64,6 @@ class SOLUTION:
                                              targetNeuronName= currentCol+3, 
                                              weight = self.weights[currentRow][currentCol])
                     #print(self.weights[currentRow][currentCol])
-            
             pyrosim.End()
             
     def Mutate(self):

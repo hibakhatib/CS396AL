@@ -7,12 +7,17 @@ import os
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
         
-        for file in os.listdir(r"C:\Users\hibar\CS396AL2"):
+        for file in os.listdir(r"."):
             if file.startswith("brain"):
-                os.system("rm brain*.nndf")
+                os.system("del brain*.nndf")
             if file.startswith("fitness"):
-                os.system("rm fitness*.txt")
-        self.nextAvailableID =0
+                os.system("del fitness*.txt")
+        
+        # for id in range(c.population):
+        #     os.system("del brain" + str(id) + ".nndf")
+        #     os.system("del fitness" + str(id) + ".txt")
+                
+        self.nextAvailableID = 0
         self.parents = {}
         for i in range(c.population):
             self.nextAvailableID += 1
@@ -33,28 +38,32 @@ class PARALLEL_HILL_CLIMBER:
         
     
     def Evaluate(self, solutions):
-        for sol in solutions:
+        for sol in range(c.population):
             solutions[sol].Start_Simulation("DIRECT")
-        for sol in solutions:
+        for sol in range(c.population):
             solutions[sol].Wait_For_Simulation_To_End()
     
         
     def Spawn(self):
         self.children = {}
-        for parent in self.parents:
+        for parent in self.parents.keys():
             self.children[parent] = copy.deepcopy(self.parents[parent])
             self.children[parent].Set_ID(self.nextAvailableID)
             self.nextAvailableID += 1
+    
     def Mutate(self):
-        for i in range(len(self.children)):
+        for i in self.children.keys():
             self.children[i].Mutate()
 
     def Print(self):
-        for parent in self.parents:
-            print(f"\nparent fitness {self.parent.fitness}, child fitness {self.child.fitness}")
+        for parent in self.parents.keys():
+            print(f"\nparent fitness {self.parents[parent].fitness}")
+        
+        for child in self.children.keys():
+            print(f"child fitness {self.children[child].fitness}")
         
     def Select(self):
-        for parent in self.parents:
+        for parent in self.parents.keys():
             if self.parents[parent].fitness > self.children[parent].fitness:
                 self.parents[parent] = self.children[parent]
                 

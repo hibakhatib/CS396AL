@@ -13,9 +13,8 @@ class ROBOT:
         self.sensors = {}
         self.solutionID = solutionID
         self.robotId = p.loadURDF("simple.urdf")
-        self.nn = NEURAL_NETWORK("brain" + self.solutionID + ".nndf")
-        os.system("rm brain" + self.solutionID + ".nndf")
-        
+        self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
+        os.system("del brain" + str(self.solutionID) + ".nndf")
         
         
         pyrosim.Prepare_To_Simulate(self.robotId)
@@ -51,14 +50,25 @@ class ROBOT:
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
         
-        f = open("temp" + self.solutionID + ".txt", "w")
+        f = open("fitness" + str(self.solutionID) + ".txt", "w")
         f.write(str(xCoordinateOfLinkZero))
         f.close()
-        os.system("mv temp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
+        #os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
+        
+        
+        # f = open("brain" + str(self.solutionID) + ".nndf", "w")
+        # f.write(str())
+        #os.system("mv temp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
         # f = open("fitness.txt", "w")
         # f.write(str(xCoordinateOfLinkZero))
         # f.close()
 
+
+
+
+        # for file in os.listdir(r"C:\Users\hibar\CS396AL2"):
+        #     if file.startswith("brain"):
+        #         os.system("rm brain*.nndf")
             
         
         
