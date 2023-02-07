@@ -20,7 +20,7 @@ b = numpy.linspace(0, 2*numpy.pi, 1000)
 backLegSensorValues = numpy.zeros(1000)
 frontLegSensorValues = numpy.zeros(1000)
 
-numberOfGenerations = 3
+numberOfGenerations = 2
 
 numSensorNeurons = 6
 numMotorNeurons = 12
