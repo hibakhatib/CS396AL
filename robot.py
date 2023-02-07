@@ -67,7 +67,7 @@ class ROBOT:
 
         
         f = open("fitness" + str(self.solutionID) + ".txt", "w")
-        f.write(str(xCoordinateOfLinkZero + zCoordinateOfLinkZero))
+        f.write(str(xCoordinateOfLinkZero))
         f.close()
         #os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
         

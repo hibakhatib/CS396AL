@@ -59,7 +59,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Print(self):
         for parent in self.parents.keys():
-            print(f"\nparent fitness {self.parents[parent].fitness}")
+            print(f"parent fitness {self.parents[parent].fitness}")
         
         for child in self.children.keys():
             print(f"child fitness {self.children[child].fitness}")
@@ -76,10 +76,13 @@ class PARALLEL_HILL_CLIMBER:
             if(parent.fitness > highest_fitness):
                 best = parent
                 highest_fitness = parent.fitness
-                best.Start_Simulation("GUI")
+            best.Start_Simulation("GUI")
+        
         
     def Show_Random(self):
         i = len(self.parents.keys())
         r = random.randint(0,i)
-        best_rand = self.parents[r]
+        best_rand = self.parents[r-1]
         best_rand.Start_Simulation("GUI")
+                
+
