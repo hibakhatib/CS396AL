@@ -7,15 +7,16 @@ import os
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
         
-        for file in os.listdir(r"."):
-            if file.startswith("brain"):
-                os.system("del brain*.nndf")
-            if file.startswith("fitness"):
-                os.system("del fitness*.txt")
         
-        # for id in range(c.population):
-        #     os.system("del brain" + str(id) + ".nndf")
-        #     os.system("del fitness" + str(id) + ".txt")
+        for id in range(c.population):
+            for file in os.listdir(r"."):
+                if file.startswith(f"brain{id}"):
+                    os.system(f"del brain{id}.nndf")
+                if file.startswith(f"fitness{id}"):
+                    os.system(f"del fitness{id}.txt")
+            
+            # os.system("del brain" + str(id) + ".nndf")
+            # os.system("del fitness" + str(id) + ".txt")
                 
         self.nextAvailableID = 0
         self.parents = {}
@@ -70,7 +71,7 @@ class PARALLEL_HILL_CLIMBER:
     def Show_Best(self):
         highest_fitness = 0
         for k in self.parents.keys():
-            parent = self.parents[k]
+            parent  = self.parents[k]
             if(parent.fitness < highest_fitness):
                 best = parent
                 highest_fitness = parent.fitness
