@@ -76,13 +76,13 @@ class PARALLEL_HILL_CLIMBER:
             if(parent.fitness > highest_fitness):
                 best = parent
                 highest_fitness = parent.fitness
-            best.Start_Simulation("GUI")
+        best.Start_Simulation("GUI")
         
         
-    def Show_Random(self):
-        i = len(self.parents.keys())
-        r = random.randint(0,i)
-        best_rand = self.parents[r-1]
-        best_rand.Start_Simulation("GUI")
+    # def Show_Random(self):
+    #     i = len(self.parents.keys())
+    #     r = random.randint(0,i)
+    #     best_rand = self.parents[r-1]
+    #     best_rand.Start_Simulation("GUI")
                 
 
