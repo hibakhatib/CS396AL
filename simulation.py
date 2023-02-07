@@ -22,7 +22,7 @@ class SIMULATION:
         
         self.solutionID = solutionID
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.setGravity(0,0,-9.8) 
+        p.setGravity(0,0,-10) 
         
         self.world = WORLD()
         self.robot = ROBOT(self.solutionID)
@@ -30,7 +30,7 @@ class SIMULATION:
     
     def Run(self):
         if self.directOrGUI == "GUI":
-            time.sleep(1/1000)
+            time.sleep(1/400)
         for i in range(1000):
             p.stepSimulation() 
             self.robot.Sense(i)

@@ -2,6 +2,7 @@ from solution import SOLUTION
 import constants as c
 import copy 
 import os
+import random
 
 
 class PARALLEL_HILL_CLIMBER:
@@ -69,10 +70,16 @@ class PARALLEL_HILL_CLIMBER:
                 self.parents[parent] = self.children[parent]
                 
     def Show_Best(self):
-        highest_fitness = 0
+        highest_fitness = 1000
         for k in self.parents.keys():
             parent  = self.parents[k]
-            if(parent.fitness < highest_fitness):
+            if(parent.fitness > highest_fitness):
                 best = parent
                 highest_fitness = parent.fitness
-        best.Start_Simulation("GUI")
+                best.Start_Simulation("GUI")
+        
+    def Show_Random(self):
+        i = len(self.parents.keys())
+        r = random.randint(0,i)
+        best_rand = self.parents[r]
+        best_rand.Start_Simulation("GUI")

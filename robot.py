@@ -4,6 +4,7 @@ from pyrosim.neuralNetwork import NEURAL_NETWORK
 from sensor import SENSOR
 from motor import MOTOR 
 import os
+import numpy
 
 
 
@@ -27,8 +28,17 @@ class ROBOT:
             self.sensors[linkName] = SENSOR(linkName)
     
     def Sense(self,i):
-        for sensor in self.sensors:
-            self.sensors[sensor].Get_Value(i)
+        i = 0
+        c = 0
+        for linkName in pyrosim.linkNamesToIndices:
+            self.sensors[linkName].Get_Value(i)
+            if c == 2:
+                self.sensors[linkName].Set_Value(i, numpy.sin(2*i))
+            i+=1
+            
+        
+        # for sensor in self.sensors:
+        #     self.sensors[sensor].Get_Value(i)
 
     def Prepare_To_Act(self):
         for jointName in pyrosim.jointNamesToIndices:
@@ -49,11 +59,15 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robotId, 0)
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
+        #zCoordinateOfLinkZero = positionOfLinkZero[2]
         
+        #basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+        #basePosition = basePositionAndOrientation[0]
+        #xCoordinateOfLinkZero = basePosition[0]
 
         
         f = open("fitness" + str(self.solutionID) + ".txt", "w")
-        f.write(str(xCoordinateOfLinkZero))
+        f.write(str(xCoordinateOfLinkZero + zCoordinateOfLinkZero))
         f.close()
         #os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
         
