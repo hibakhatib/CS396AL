@@ -4,7 +4,7 @@ bamplitude = -numpy.pi/2
 bfrequency = 10
 bphaseOffset = 0
 
-population = 2
+population = 10
 
 famplitude = numpy.pi/2
 ffrequency = 5
@@ -20,7 +20,7 @@ b = numpy.linspace(0, 2*numpy.pi, 1000)
 backLegSensorValues = numpy.zeros(1000)
 frontLegSensorValues = numpy.zeros(1000)
 
-numberOfGenerations = 1
+numberOfGenerations = 3
 
 numSensorNeurons = 6
 numMotorNeurons = 12

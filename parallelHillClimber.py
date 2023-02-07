@@ -70,10 +70,11 @@ class PARALLEL_HILL_CLIMBER:
                 self.parents[parent] = self.children[parent]
                 
     def Show_Best(self):
-        highest_fitness = 1000
+        highest_fitness = 0
         for k in self.parents.keys():
+            best = self.parents[k]
             parent  = self.parents[k]
-            if(parent.fitness > highest_fitness):
+            if(parent.fitness < highest_fitness):
                 best = parent
                 highest_fitness = parent.fitness
         best.Start_Simulation("GUI")
