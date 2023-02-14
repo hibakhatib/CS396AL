@@ -16,8 +16,10 @@ class SOLUTION:
         
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
-        self.Create_Body()
-        self.Create_Brain()
+        self.Create_Random()
+        #self.Create_Body()
+        self.Create_Brain2(self.myID)
+        # self.Random_Morphology()
         os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
         
     def Wait_For_Simulation_To_End(self):
@@ -34,7 +36,7 @@ class SOLUTION:
         
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
-        pyrosim.Send_Cube(name="Box", pos=[-2,-2,0.5] , size=[c.length, c.width, c.height])
+        #pyrosim.Send_Cube(name="Box", pos=[-2,-2,0.5] , size=[c.length, c.width, c.height])
         pyrosim.End()
 
     def Create_Body(self):
@@ -93,11 +95,33 @@ class SOLUTION:
             pyrosim.Send_Joint(name="LeftLeg3_LeftLowerLeg3", parent="LeftLeg3", child="LeftLowerLeg3", type="revolute", position=[0, -1, 0], jointAxis="0 1 0")
             pyrosim.Send_Joint(name="RightLeg3_RightLowerLeg3", parent="RightLeg3", child="RightLowerLeg3", type="revolute", position=[0, 1, 0], jointAxis="0 1 0")
             pyrosim.End()
-            
-        #old bod
         
         
-            
+    def Create_Brain2(self, ID):
+        pyrosim.Start_NeuralNetwork("brain" + str(ID) + ".nndf")
+
+
+        name_count = 0
+        if c.snake_length + 1 in c.sensors:
+            pyrosim.Send_Sensor_Neuron(name = name_count , linkName = "Head")
+            pyrosim.Send_Motor_Neuron( name = name_count + 1 , jointName = "Head_Link0")
+            name_count += 2
+
+
+        for i in range(c.snake_length):
+            if i in c.sensors:
+                pyrosim.Send_Sensor_Neuron(name = name_count , linkName = "Link" + str(i))
+                name_count += 1
+                if i == c.snake_length - 1: continue
+                pyrosim.Send_Motor_Neuron( name = name_count , jointName = "Link" + str(i) + "_Link" + str(i+1))
+                name_count += 1
+                
+        for currentRow in range(c.numSensorNeurons):
+            for currentColumn in range(c.numMotorNeurons):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn + c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
+
+        pyrosim.End()
+    
     def Create_Brain(self):
             pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
             pyrosim.Send_Sensor_Neuron(name=0, linkName="LeftLowerLeg")
@@ -156,6 +180,111 @@ class SOLUTION:
     
     def Set_ID(self, id):
         self.myID = id
+        
+    def Create_Random(self):
+        length = c.snake_length
+        pyrosim.Start_URDF("body.urdf")
+
+        y = random.randint(1,6)
+        if length + 1 in c.sensors:
+            pyrosim.Send_Cube(name="Head", pos=[-10,20,2.5] , size=[random.randint(1,3), y, random.randint(1,5)], colorName="green")
+        else:
+            pyrosim.Send_Cube(name="Head", pos=[-10,20,2.5] , size=[random.randint(1,3), y, random.randint(1,5)])
+        pyrosim.Send_Joint(name = "Head_Link0", parent = "Head", child = "Link0", type = "revolute", position= [-10,20-y/2,2.5], jointAxis = "0 0 1")
+
+        for i in range(length):
+            y = random.randint(0,5)
+            if i in c.sensors:
+                pyrosim.Send_Cube(name="Link" + str(i), pos=[0,-y/2,0] , size=[random.randint(1,5), y, random.randint(1,5)], colorName = "green")
+            else:
+                pyrosim.Send_Cube(name="Link" + str(i), pos=[0,-y/2,0] , size=[random.randint(1,5), y, random.randint(1,5)])
+            if i == length - 1: continue
+            pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(i+1), parent = "Link" + str(i), child = "Link" + str(i+1), type = "revolute", position= [0,-y,0], jointAxis = "0 0 1")
+
+        
+        pyrosim.End()
+        
+
+        
+    # def Random_Morphology(self):
+    #     pyrosim.Start_URDF("simple.urdf")
+    #     pyrosim.Send_Cube(name="Head", pos=[0,0,1] , size=[c.length+1.5, c.width, c.height])
+    #     init_z = 1
+    #     possible_len = random.randint(2,9) #number of links
+    #     num_joints = possible_len - 1
+    #     sensors = [False] * possible_len
+    #     sensors[random.randint(0,possible_len-1)]
+    #     joint_type = ['slider', 'revolute', 'continuous']
+    #     for i in range(possible_len):
+    #         j = random.randint(0, possible_len)
+    #         for i in range(j):
+    #             init_z += 1
+    #             pyrosim.Send_Cube(name = f"{i}", pos = [0,0,(init_z +1)], size = [random.randint(0,5), random.randint(0,5), random.randint(0,5)])
+    #             for k in range((possible_len) - j):
+    #                 prev_k = k-1
+    #                 rand_joint = joint_type[random.randint(0,3) -1]
+    #                 pyrosim.Send_Joint(name = f"{prev_k}_{k}", parent = f"{prev_k}", child = f"{k}", type = f"{rand_joint}", position = [0,0, (init_z + 1)], jointAxis = "0 1 0")
+                    
+    #     pyrosim.End()
+        
+    
+#get random number n for random length of the shape 
+#get n random body shapes 
+#assign random to have sensors
+#color accordingly
+    
+# random sensor placement
+# random shape of links 
+# if with sensors then green
+# if without sensors then blue
+
+# (a jointed, motorized, innervated, sensorized snake) 
+# all joints should have motors and all pairs of neurons must have synapses 
+
+
+
+
+# def Random_Morphology(self):
+#     pyrosim.Start_URDF("randMorph.urdf")
+#     pyrosim.Send_Cube(name="Head", pos=[0,0,1] , size=[c.length+1.5, c.width, c.height])
+#     init_z = 1
+#     possible_len = random.randint(2,9)
+#     joint_type = ['slider', 'revolute', 'continuous']
+#     for i in range(len(possible_len)):
+#         j = random.randint(0, range(len(possible_len)))
+#         for i in range(j):
+#             init_z += 1
+#             pyrosim.Send_Cube(name = f"{i}", pos = [0,0,(init_z +1)], size = [random.randint(0,5), random.randint(0,5), random.randint(0,5)])
+#         for k in range(range(len(possible_len)) - j):
+#             prev_k = k-1
+#             rand_joint = joint_type[random.randint(0,3)]
+#             pyrosim.Send_Joint(name = f"{prev_k}_{k}", parent = f"{prev_k}", child = f"{k}", type = f"{rand_joint}", position = [0,0, (init_z + 1)], jointAxis = "0 1 0")
+            
+#     pyrosim.End()
+
+
+# all joints should have motors and all pairs of neurons must have synapses 
+
+# def Random_Brain():
+#     pyrosim.Start_NeuralNetwork("randomMorph.nndf")
+#     pyrosim.End() 
+
+
+
+# def Generate_Random():
+#     pyrosim.Start_URDF("randMorph.urdf")
+#     possible_len = random.randint(2,9)
+#     for i in range(len(possible_len)):
+#         j = random.randint(0, range(len(possible_len)))
+#         for i in range(j):
+#                 rand_len = random.randint(0,5)
+#                 rand_width = random.randint(0,5)
+#                 rand_height = random.randint(0,5)
+#             pyrosim.Send_Cube()
+        
+    
+    
+
         
         
         

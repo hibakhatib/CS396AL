@@ -13,7 +13,7 @@ class ROBOT:
         self.motors = {}
         self.sensors = {}
         self.solutionID = solutionID
-        self.robotId = p.loadURDF("simple.urdf")
+        self.robotId = p.loadURDF("body.urdf")
         self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
         os.system("del brain" + str(self.solutionID) + ".nndf")
         

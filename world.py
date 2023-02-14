@@ -1,6 +1,6 @@
 
 import pybullet as p
-import pyrosim as pyrosim 
+import pyrosim.pyrosim as pyrosim 
 import pybullet_data
 
 class WORLD:
