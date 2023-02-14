@@ -18,13 +18,12 @@ height = 1
 numLinks = random.randint(3, 10)
 numJoints = numLinks -1
 
-snake_length = random.randint(1, 10)
-numSensorNeurons = random.randint(1, 10)
-numMotorNeurons = snake_length
+length = random.randint(0, 9)
+numSensorNeurons = random.randint(0, 9)
+numMotorNeurons = length
 sensors = []
-for i in range(numSensorNeurons):
-    r = random.randint(0, snake_length + 1)
-    sensors.append(r)
+sensors = [sensors.append(random.randint(0, length)) for i in range(numSensorNeurons)]
+
 
 
 f = numpy.linspace(0, 2*numpy.pi, 1000)
@@ -34,7 +33,7 @@ frontLegSensorValues = numpy.zeros(1000)
 
 numberOfGenerations = 1
 
-numSensorNeurons = 6
-numMotorNeurons = 12
+# numSensorNeurons = 6
+# numMotorNeurons = 12
 
 motorJointRange = 0.2
