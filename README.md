@@ -15,5 +15,7 @@ The snake has blue and green links/parts. The blue indicates that the link does 
 
 
 TO find out more about this project: 
+
   This material builds on the MOOC found at this link: https://www.reddit.com/r/ludobots/
+  
   This specific project (random snake generation) is not found on the ludobots subreddit but is course material from CS396 Artificial Life taught at Northwestern University by Professor Sam Kriegman. This class aims to contribute to the field of evolutionary robotics. 
