@@ -16,9 +16,10 @@ class SOLUTION:
         
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
-        self.Create_Random()
+        #self.Create_Random()
         #self.Create_Body()
-        self.Create_Brain2(self.myID)
+        self.Create_Brain3()
+        self.Create_Ant()
         # self.Random_Morphology()
         os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
         
@@ -38,8 +39,11 @@ class SOLUTION:
         pyrosim.Start_SDF("world.sdf")
         #pyrosim.Send_Cube(name="Box", pos=[-2,-2,0.5] , size=[c.length, c.width, c.height])
         pyrosim.End()
+        
+        
 
     def Create_Body(self):
+            
             pyrosim.Start_URDF("simple.urdf")
                         #hexapod final
             pyrosim.Send_Cube(name="Torso", pos=[0,0,1] , size=[c.length+1.5, c.width, c.height])
@@ -77,20 +81,20 @@ class SOLUTION:
         pyrosim.Start_NeuralNetwork("brain" + str(ID) + ".nndf")
 
 
-        name_count = 0
+        names = 0
         if c.length + 1 in c.sensors:
-            pyrosim.Send_Sensor_Neuron(name = name_count , linkName = "Head")
-            pyrosim.Send_Motor_Neuron( name = name_count + 1 , jointName = "Head_Link1")
-            name_count += 2
+            pyrosim.Send_Sensor_Neuron(name = names , linkName = "Head")
+            pyrosim.Send_Motor_Neuron( name = names + 1 , jointName = "Head_Link1")
+            names += 2
 
 
         for i in range(c.length):
             if i in c.sensors:
-                pyrosim.Send_Sensor_Neuron(name = name_count , linkName = "Link" + str(i))
-                name_count += 1
+                pyrosim.Send_Sensor_Neuron(name = names , linkName = "Link" + str(i))
+                names += 1
                 if i == c.length - 1: continue
-                pyrosim.Send_Motor_Neuron( name = name_count , jointName = "Link" + str(i) + "_Link" + str(i+1))
-                name_count += 1
+                pyrosim.Send_Motor_Neuron( name = names , jointName = "Link" + str(i) + "_Link" + str(i+1))
+                names += 1
                 
         for currentRow in range(c.numSensorNeurons):
             for currentColumn in range(c.numMotorNeurons):
@@ -166,8 +170,22 @@ class SOLUTION:
 
         pyrosim.End()
         
+    def Create_Ant(self):
+        pyrosim.Start_URDF("body.urdf")
+        
+        pyrosim.Send_Link(name = "body", pos = [0,0,0], size = [random.uniform(0.8,3),random.uniform(0.8,3),random.uniform(0.8,3)], colorName = "blue")
+        pyrosim.End()
+    
+    def Create_Brain3(self):
+        pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
+        pyrosim.Send_Sensor_Neuron(name=0, linkName="base")
+        pyrosim.End()
+        
 
-
+        #legs must be able to connect to any random unoccupied point to main Link/body
+        #leg sizes random 
+        #max number of legs is as many as can fit around the main body without overcrowding/overlapping as described in project desc
+        #
 
     # def Random_Morphology(self):
     #     pyrosim.Start_URDF("simple.urdf")
