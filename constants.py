@@ -4,7 +4,7 @@ bamplitude = -numpy.pi/2
 bfrequency = 10
 bphaseOffset = 0
 
-population = 5
+population = 1
 
 famplitude = numpy.pi/2
 ffrequency = 5
