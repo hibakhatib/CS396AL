@@ -18,7 +18,7 @@ class SOLUTION:
         self.Create_World()
         #self.Create_Random()
         #self.Create_Body()
-        self.Create_Brain2(self.myID)
+        self.random_brain()
         self.random_quad()
         # self.Random_Morphology()
         os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
@@ -75,6 +75,25 @@ class SOLUTION:
             pyrosim.Send_Joint(name="LeftLeg3_LeftLowerLeg3", parent="LeftLeg3", child="LeftLowerLeg3", type="revolute", position=[0, -1, 0], jointAxis="0 1 0")
             pyrosim.Send_Joint(name="RightLeg3_RightLowerLeg3", parent="RightLeg3", child="RightLowerLeg3", type="revolute", position=[0, 1, 0], jointAxis="0 1 0")
             pyrosim.End()
+            
+            
+    def random_brain(self):
+        pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
+        pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "limb0")
+        limbCounter = 1
+        for i in range(1, c.numSensorNeurons):
+            pyrosim.Send_Sensor_Neuron(name = limbCounter , linkName = "limb" + str(i))
+            limbCounter +=1
+        
+        for i in range(c.numMotorNeurons):
+            pyrosim.Send_Motor_Neuron( name = limbCounter , jointName = "limb0_limb" + str(i * 2 + 1))
+            limbCounter +=1
+        
+        
+        for currentRow in range(c.numSensorNeurons):
+            for currentColumn in range(c.numMotorNeurons):
+                pyrosim.Send_Synapse( sourceNeuronName = currentRow , targetNeuronName = currentColumn + c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
+        pyrosim.End()
         
         
     def Create_Brain2(self, ID):
@@ -172,67 +191,117 @@ class SOLUTION:
 
     def random_quad(self):
         pyrosim.Start_URDF("body.urdf")
-        numLegs = c.limbs
         torso_len = c.length
         torso_width = c.width
+        torso_height = c.height
         
         len_pos = []
         wid_pos = []
-        for pos in np.arange(0,0.3,torso_len):
-            len_pos.append(pos) # x
-        for pos in np.arange(0,0.3,torso_width):
-            wid_pos.append(pos) #y 
+        len_pos = np.arange(0,torso_len, 0.3)
+        wid_pos = np.arange(0,torso_width, 0.3)
+        #     len_pos.append(pos) # x
+        # for pos in np.arange(0,0.3,torso_width):
+        #     wid_pos.append(pos) #y 
         
         k = 0
         j = 0
         
+        if len(len_pos) < len(wid_pos):
+            empty_posns = len_pos
+        else:
+            empty_posns = wid_pos
+        
         torsoColor = random.randint(0,10)
         
         if torsoColor > 5:
-            pyrosim.Send_Cube(name = "torso", pos = [-torso_len/3, 0, 1], size = [torso_len, torso_width, c.height], colorName = "green")
+            pyrosim.Send_Cube(name = "limb0", pos = [-torso_len/2, 0, 1], size = [torso_len, torso_width, torso_height], colorName = "green")
         else:
-            pyrosim.Send_Cube(name = "torso", pos = [-torso_len/3, 0, 1], size = [torso_len, torso_width, c.height])
-            
+            pyrosim.Send_Cube(name = "limb0", pos = [-torso_len/2, 0, 1], size = [torso_len, torso_width, torso_height])
         
-        for i in range(c.limbs):
-            pyrosim.Send_Joint(name = "torso_limb" + str(j), parent = "torso", child = "limb" + str(j), type = "revolute", position = wid_pos[j], jointAxis = "1 1 0")
-            pyrosim.Send_Cube(name )
-            pyrosim.Send_Cube(name = "torso",
-                              size = [c.length, c.width, c.height],
-                              pos = [0,0,1],
-                              colorName = "green"
-                              )
-        else:
-            pyrosim.Send_Cube(name = "torso",
-                              size = [c.length, c.width, c.height],
-                              pos = [0,0,1]
-                              )
-            
-        pyrosim.Send_Joint(name = "torso_link1",
-                               parent = "torso",
-                               child = "link1",
-                               type = "revolute", 
-                               position = [wid_pos[k], len_pos[j], 1], #im not sure this works
-                               jointAxis = "1 1 0"
-                               )
         
-        for i in range(numLegs):
-            if i in c.sensors:
-                pyrosim.Send_Cube(name="Link" + str(i), pos=[wid_pos[k], len_pos[j], 1] , 
-                                  size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)], 
-                                  colorName = "green")
+        limbCounter = 1
+        for i in range(len(empty_posns)):
+            saved_h = c.height
+            color_pick = random.randint(0,10)
+            if color_pick > 5:
+                color = "green"
             else:
-                pyrosim.Send_Cube(name="Link" + str(i), 
-                                  pos=[wid_pos[k], len_pos[j], 1] , 
-                                  size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)],)
-            if i != numLegs - 1: return
+                color = "blue"
+            pyrosim.Send_Joint( name = "limb0_limb" + str(limbCounter) , parent= "limb0", child = "limb" + str(limbCounter), type = "revolute", position = [len_pos[j], -wid_pos[j], saved_h], jointAxis = "1 1 0")
+            pyrosim.Send_Cube(name="limb" + str(limbCounter), pos=[len_pos[j], wid_pos[j], saved_h], size=[c.length, c.width, c.height], colorName = color)
             
-            pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(i+1), parent = "Link" + str(i), child = "Link" + str(i+1), type = "revolute", 
-                               position= [wid_pos[k], len_pos[j], 1], jointAxis = "1 1 0")
-        
-            k+=1
+            pyrosim.Send_Joint( name = "limb" + str(limbCounter) + "_limb" + str(limbCounter + 1) , parent= "limb" + str(limbCounter), child = "limb" + str(limbCounter + 1), type = "revolute", position = [len_pos[j],-wid_pos[j], saved_h], jointAxis = "1 1 0")
+            pyrosim.Send_Cube(name="limb" + str(limbCounter + 1), pos=[len_pos[j]+ 0.3, 0, wid_pos[j]+ 0.3], size=[c.length, c.width, c.height], colorName = color)
+
+            limbCounter +=2
             j+=1
+
+        for i in range(len(empty_posns)):
+            color_pick = random.randint(0,10)
+            if color_pick > 5:
+                color = "green"
+            else:
+                color = "blue"
+            saved_h = c.height
+            pyrosim.Send_Joint( name = "limb0_limb" + str(limbCounter) , parent= "limb0", child = "limb" + str(limbCounter), type = "revolute", position = [len_pos[k]/2, wid_pos[k]/2, saved_h], jointAxis = "1 1 0")
+            pyrosim.Send_Cube(name="limb" + str(limbCounter), pos=[len_pos[k], wid_pos[k], saved_h], size=[c.length, c.width, c.height], colorName = color)
+            
+            pyrosim.Send_Joint( name = "limb" + str(limbCounter) + "_limb" + str(limbCounter + 1) , parent= "limb" + str(limbCounter), child = "limb" + str(limbCounter + 1), type = "revolute", position = [len_pos[k],wid_pos[k], saved_h], jointAxis = "1 1 0")
+            pyrosim.Send_Cube(name="limb" + str(limbCounter + 1), pos=[(len_pos[k]/2)+ 0.3, 0, wid_pos[k]+ 0.3], size=[c.length, c.width, c.height], colorName = color)
+
+            limbCounter +=2
+            k+=1
+
         pyrosim.End()
+    
+            
+        
+        # for i in range(c.limbs):
+        #     pyrosim.Send_Joint(name = "torso_limb" + str(j), parent = "torso", child = "limb" + str(j), type = "revolute", position = [len_pos[j],wid_pos[j], 0] , jointAxis = "1 1 0")
+        #     pyrosim.Send_Cube(name = "torso" + str(j), pos = [0,-0.5, 0], size = [0.2, 0.5, 0.2], colorName = "green")
+            
+        #     pyrosim.Send_Joint(name = "torso" + str(j) + "_limb" + str(j+1), parent = "torso" + str(j), child = "limb" + str(j+1), type = "revolute", position = [0,-.5,0], jointAxis = "1 1 0")
+        #     pyrosim.Send_Cube(name = "torso" + str(j + 1), pos = [0,0,-0.2], size = [0.2, 0.2, 0.4], colorName = "green")
+            
+        #     j+= 2
+        #     k+= 1
+            
+            
+        #     pyrosim.Send_Cube(name = "torso",
+        #                       size = [c.length, c.width, c.height],
+        #                       pos = [0,0,1],
+        #                       colorName = "green"
+        #                       )
+        # else:
+        #     pyrosim.Send_Cube(name = "torso",
+        #                       size = [c.length, c.width, c.height],
+        #                       pos = [0,0,1]
+        #                       )
+            
+        # pyrosim.Send_Joint(name = "torso_link1",
+        #                        parent = "torso",
+        #                        child = "link1",
+        #                        type = "revolute", 
+        #                        position = [wid_pos[k], len_pos[j], 1], #im not sure this works
+        #                        jointAxis = "1 1 0"
+        #                        )
+        
+        # for i in range(numLegs):
+        #     if i in c.sensors:
+        #         pyrosim.Send_Cube(name="Link" + str(i), pos=[wid_pos[k], len_pos[j], 1] , 
+        #                           size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)], 
+        #                           colorName = "green")
+        #     else:
+        #         pyrosim.Send_Cube(name="Link" + str(i), 
+        #                           pos=[wid_pos[k], len_pos[j], 1] , 
+        #                           size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)],)
+        #     if i != numLegs - 1: return
+            
+        #     pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(i+1), parent = "Link" + str(i), child = "Link" + str(i+1), type = "revolute", 
+        #                        position= [wid_pos[k], len_pos[j], 1], jointAxis = "1 1 0")
+        
+        #     k+=1
+        #     j+=1
             
             
             
@@ -293,3 +362,6 @@ class SOLUTION:
     #                                          weight = self.weights[currentRow][currentCol])
     #                 #print(self.weights[currentRow][currentCol])
     #         pyrosim.End()
+    
+
+    

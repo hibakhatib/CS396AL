@@ -11,8 +11,8 @@ famplitude = numpy.pi/2
 ffrequency = 5
 fphaseOffset = 0
 
-length = random.uniform(0.3,3)
-width = random.uniform(0.3,3)
+length = random.uniform(0.3,1)
+width = random.uniform(0.3,1)
 height = random.uniform(0.3,0.9)
 
 numLinks = random.randint(3, 10)
