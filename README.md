@@ -1,21 +1,39 @@
 ### CS396AL 
 
-For assignment 6, we created random snakes. In accordance to assignment details, all joints contain motors and every pair of neurons contains synpases.
+For assignment 7, we created 3D bodies. In accordance to assignment details, all joints contain motors and every pair of neurons contains synpases.
 
-After cloning this repo, run the command "python search.py" in your terminal to see a new, random snake. 
-Run the command everytime you wish to view a new snake. 
+There is a motor for every joint but sensors are added randomly with a 50/50 chance.
 
-A brief video of the expected behavior can be found here: https://youtu.be/P2UvYyG3zeo
+The body has blue and green links/parts. The blue indicates that the link does not contain sensors while the green indicates that the link does contain a sensor. 
 
-Below is an image of a (chunky) randomly generated snake: 
+After cloning this repo, run the command "python search.py" in your terminal to see a new body. 
+Run the command everytime you wish to view a new body. All bodies should have a main torso or abdomen with a series of limbs which act as legs. 
 
-![image](https://user-images.githubusercontent.com/98929421/218638434-374eb5c1-7fcc-4275-9db4-e47993528d0f.png)
+At the joints which connected the limb to the torso, the joint axis was both in the x direction and z direction. By having joints that are up/down and left/right, we are able to emulate hinge joints, like elbows or knees, and allows the body to move in a smoother way. 
 
-The snake has blue and green links/parts. The blue indicates that the link does not contain sensors while the green indicates that the link does contain a sensor. 
+
+
+A brief video of the expected behavior can be found here: https://youtu.be/Qu6ia1WaUcQ
+
+The clip shows the initial generation of random sized boxes at random positions, often overlapping and crowding. Eventually I repurposed old my quadruped to create a cleaner body with a random number of legs at positions which don't overlap. 
+
+The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion:
+
+
+Diagram of some of my planning/ideation
+
+
+
+a morphospace describes the range of variation of the morphology of bodies and their structures. 
+
+Additionally, here is a gif of the best result from my trials (which honestly were not many 😬)
+
+![a7](https://user-images.githubusercontent.com/98929421/220257729-8bc0220b-6534-4b97-a6be-4038cafe569b.gif)
 
 
 TO find out more about this project: 
 
    This material builds on the MOOC found at this link: https://www.reddit.com/r/ludobots/
+   find pyrosim here: https://github.com/jbongard/pyrosim 
   
-   This specific project (random snake generation) is not found on the ludobots subreddit but is course material from CS396 Artificial Life taught at Northwestern University by Professor Sam Kriegman. This class aims to contribute to the field of evolutionary robotics. 
+   This specific project is not found on the ludobots subreddit but is course material from CS396 Artificial Life taught at Northwestern University by Professor Sam Kriegman. This class aims to contribute to the field of evolutionary robotics. 
