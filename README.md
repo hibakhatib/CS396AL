@@ -16,7 +16,7 @@ The clip shows the initial generation of random sized boxes at random positions,
 
 The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
 
-![IMG_0431](https://user-images.githubusercontent.com/98929421/220260494-29c6a12c-3b37-45d5-a190-75a0d08d7d7f.jpg)
+![IMG_0431](https://user-images.githubusercontent.com/98929421/220260494-29c6a12c-3b37-45d5-a190-75a0d08d7.jpg)
 
 
 Diagram of some of my planning/ideation:
