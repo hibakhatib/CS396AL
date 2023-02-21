@@ -18,8 +18,8 @@ class SOLUTION:
         self.Create_World()
         #self.Create_Random()
         #self.Create_Body()
-        self.Create_Brain3()
-        self.Create_Ant()
+        self.Create_Brain2(self.myID)
+        self.random_quad()
         # self.Random_Morphology()
         os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
         
@@ -79,8 +79,6 @@ class SOLUTION:
         
     def Create_Brain2(self, ID):
         pyrosim.Start_NeuralNetwork("brain" + str(ID) + ".nndf")
-
-
         names = 0
         if c.length + 1 in c.sensors:
             pyrosim.Send_Sensor_Neuron(name = names , linkName = "Head")
@@ -88,7 +86,7 @@ class SOLUTION:
             names += 2
 
 
-        for i in range(c.length):
+        for i in np.arange(0, 0.1, c.length):
             if i in c.sensors:
                 pyrosim.Send_Sensor_Neuron(name = names , linkName = "Link" + str(i))
                 names += 1
@@ -170,52 +168,74 @@ class SOLUTION:
 
         pyrosim.End()
         
-    def Create_Ant(self):
-        pyrosim.Start_URDF("body.urdf")
-        
-        pyrosim.Send_Link(name = "body", pos = [0,0,0], size = [random.uniform(0.8,3),random.uniform(0.8,3),random.uniform(0.8,3)], colorName = "blue")
-        pyrosim.End()
-    
-    def Create_Brain3(self):
-        pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
-        pyrosim.Send_Sensor_Neuron(name=0, linkName="base")
-        pyrosim.End()
-        
 
-        #legs must be able to connect to any random unoccupied point to main Link/body
-        #leg sizes random 
-        #max number of legs is as many as can fit around the main body without overcrowding/overlapping as described in project desc
-        #
 
-    # def Random_Morphology(self):
-    #     pyrosim.Start_URDF("simple.urdf")
-    #     pyrosim.Send_Cube(name="Head", pos=[0,0,1] , size=[c.length+1.5, c.width, c.height])
-    #     init_z = 1
-    #     possible_len = random.randint(2,9) #number of links
-    #     num_joints = possible_len - 1
-    #     sensors = [False] * possible_len
-    #     sensors[random.randint(0,possible_len-1)]
-    #     joint_type = ['slider', 'revolute', 'continuous']
-    #     for i in range(possible_len):
-    #         j = random.randint(0, possible_len)
-    #         for i in range(j):
-    #             init_z += 1
-    #             pyrosim.Send_Cube(name = f"{i}", pos = [0,0,(init_z +1)], size = [random.randint(0,5), random.randint(0,5), random.randint(0,5)])
-    #             for k in range((possible_len) - j):
-    #                 prev_k = k-1
-    #                 rand_joint = joint_type[random.randint(0,3) -1]
-    #                 pyrosim.Send_Joint(name = f"{prev_k}_{k}", parent = f"{prev_k}", child = f"{k}", type = f"{rand_joint}", position = [0,0, (init_z + 1)], jointAxis = "0 1 0")
-                    
-    #     pyrosim.End()
-    
-    
-    
     def random_quad(self):
-        pyrosim.Start_URDF("simple.urdf")
-        torso_size = [random.uniform(.3,5), random.uniform(0.3,5), random.uniform(0, 1)]
+        pyrosim.Start_URDF("body.urdf")
+        numLegs = c.limbs
+        torso_len = c.length
+        torso_width = c.width
         
+        len_pos = []
+        wid_pos = []
+        for pos in np.arange(0,0.3,torso_len):
+            len_pos.append(pos) # x
+        for pos in np.arange(0,0.3,torso_width):
+            wid_pos.append(pos) #y 
         
-        numLegs = random.randint(1,6)
+        k = 0
+        j = 0
+        
+        torsoColor = random.randint(0,10)
+        
+        if torsoColor > 5:
+            pyrosim.Send_Cube(name = "torso", pos = [-torso_len/3, 0, 1], size = [torso_len, torso_width, c.height], colorName = "green")
+        else:
+            pyrosim.Send_Cube(name = "torso", pos = [-torso_len/3, 0, 1], size = [torso_len, torso_width, c.height])
+            
+        
+        for i in range(c.limbs):
+            pyrosim.Send_Joint(name = "torso_limb" + str(j), parent = "torso", child = "limb" + str(j), type = "revolute", position = wid_pos[j], jointAxis = "1 1 0")
+            pyrosim.Send_Cube(name )
+            pyrosim.Send_Cube(name = "torso",
+                              size = [c.length, c.width, c.height],
+                              pos = [0,0,1],
+                              colorName = "green"
+                              )
+        else:
+            pyrosim.Send_Cube(name = "torso",
+                              size = [c.length, c.width, c.height],
+                              pos = [0,0,1]
+                              )
+            
+        pyrosim.Send_Joint(name = "torso_link1",
+                               parent = "torso",
+                               child = "link1",
+                               type = "revolute", 
+                               position = [wid_pos[k], len_pos[j], 1], #im not sure this works
+                               jointAxis = "1 1 0"
+                               )
+        
+        for i in range(numLegs):
+            if i in c.sensors:
+                pyrosim.Send_Cube(name="Link" + str(i), pos=[wid_pos[k], len_pos[j], 1] , 
+                                  size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)], 
+                                  colorName = "green")
+            else:
+                pyrosim.Send_Cube(name="Link" + str(i), 
+                                  pos=[wid_pos[k], len_pos[j], 1] , 
+                                  size=[c.height, random.uniform(0.3,0.9), random.uniform(0.3,0.9)],)
+            if i != numLegs - 1: return
+            
+            pyrosim.Send_Joint(name = "Link" + str(i) + "_Link" + str(i+1), parent = "Link" + str(i), child = "Link" + str(i+1), type = "revolute", 
+                               position= [wid_pos[k], len_pos[j], 1], jointAxis = "1 1 0")
+        
+            k+=1
+            j+=1
+        pyrosim.End()
+            
+            
+            
     
     
     

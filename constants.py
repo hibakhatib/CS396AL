@@ -11,18 +11,18 @@ famplitude = numpy.pi/2
 ffrequency = 5
 fphaseOffset = 0
 
-length = 1
-width = 1
-height = 1
+length = random.uniform(0.3,3)
+width = random.uniform(0.3,3)
+height = random.uniform(0.3,0.9)
 
 numLinks = random.randint(3, 10)
 numJoints = numLinks -1
 
-length = random.randint(0, 9)
+limbs = random.randint(1, 9)
 numSensorNeurons = random.randint(0, 9)
-numMotorNeurons = length
+numMotorNeurons = limbs
 sensors = []
-sensors = [sensors.append(random.randint(0, length)) for i in range(numSensorNeurons)]
+sensors = [sensors.append(random.randint(0, limbs)) for i in range(numSensorNeurons)]
 
 
 

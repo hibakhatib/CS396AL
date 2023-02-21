@@ -59,27 +59,11 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robotId, 0)
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
-        #zCoordinateOfLinkZero = positionOfLinkZero[2]
-        
-        #basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
-        #basePosition = basePositionAndOrientation[0]
-        #xCoordinateOfLinkZero = basePosition[0]
 
         
         f = open("fitness" + str(self.solutionID) + ".txt", "w")
         f.write(str(xCoordinateOfLinkZero))
         f.close()
-        #os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
-        
-        
-        # f = open("brain" + str(self.solutionID) + ".nndf", "w")
-        # f.write(str())
-        #os.system("mv temp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
-        # f = open("fitness.txt", "w")
-        # f.write(str(xCoordinateOfLinkZero))
-        # f.close()
-
-
 
 
         # for file in os.listdir(r"C:\Users\hibar\CS396AL2"):
