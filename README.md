@@ -2,9 +2,7 @@
 
 For assignment 7, we created 3D bodies. In accordance to assignment details, all joints contain motors and every pair of neurons contains synpases.
 
-There is a motor for every joint but sensors are added randomly with a 50/50 chance.
-
-The body has blue and green links/parts. The blue indicates that the link does not contain sensors while the green indicates that the link does contain a sensor. 
+There is a motor for every joint but sensors are added randomly with a 50/50 chance for each link upon creation. I basically 'flipped' a coin to decide the body's fate. The blue indicates that the link does not contain sensors while the green indicates that the link does contain a sensor. 
 
 After cloning this repo, run the command "python search.py" in your terminal to see a new body. 
 Run the command everytime you wish to view a new body. All bodies should have a main torso or abdomen with a series of limbs which act as legs. 
@@ -12,15 +10,18 @@ Run the command everytime you wish to view a new body. All bodies should have a 
 At the joints which connected the limb to the torso, the joint axis was both in the x direction and z direction. By having joints that are up/down and left/right, we are able to emulate hinge joints, like elbows or knees, and allows the body to move in a smoother way. 
 
 
-
 A brief video of the expected behavior can be found here: https://youtu.be/Qu6ia1WaUcQ
 
-The clip shows the initial generation of random sized boxes at random positions, often overlapping and crowding. Eventually I repurposed old my quadruped to create a cleaner body with a random number of legs at positions which don't overlap. 
+The clip shows the initial generation of random sized boxes at random positions, often overlapping and crowding. Eventually I repurposed old my hexapod to create a cleaner body with a random number of legs at positions which don't overlap. 
 
-The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion:
+The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
+
+![IMG_0431](https://user-images.githubusercontent.com/98929421/220260494-29c6a12c-3b37-45d5-a190-75a0d08d7d7f.jpg)
 
 
-Diagram of some of my planning/ideation
+Diagram of some of my planning/ideation:
+
+![IMG_0430](https://user-images.githubusercontent.com/98929421/220260521-d31af8a6-e19c-41f1-848d-6cf28b2b6d97.jpg)
 
 
 
