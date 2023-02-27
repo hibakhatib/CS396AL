@@ -20,8 +20,7 @@ class SOLUTION:
         #self.Create_Body()
         self.random_brain()
         self.random_quad()
-        self.Generate_Body_rand()
-        self.Generate_Brain_rand()
+        
         # self.Random_Morphology()
         os.system("python simulate.py " + directOrGUI + " " + str(self.myID) + " &")
         
