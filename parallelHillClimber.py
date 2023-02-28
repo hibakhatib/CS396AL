@@ -69,6 +69,10 @@ class PARALLEL_HILL_CLIMBER:
             if self.parents[parent].fitness > self.children[parent].fitness:
                 self.parents[parent] = self.children[parent]
                 
+            if 
+            # if the number of links is smaller every time its better
+            
+                
     def Show_Best(self):
         highest_fitness = 0
         for k in self.parents.keys():

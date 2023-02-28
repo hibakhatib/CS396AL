@@ -18,8 +18,11 @@ height = random.uniform(0.3,0.7)
 numLinks = random.randint(3, 10)
 numJoints = numLinks -1
 
-limbs = random.randint(1, 9)
-numSensorNeurons = random.randint(0, 9)
+limbs = random.randint(1, 5)
+if limbs%2 != 0:
+    limbs = limbs *2
+
+numSensorNeurons = limbs +1
 numMotorNeurons = limbs
 sensors = []
 sensors = [sensors.append(random.randint(0, limbs)) for i in range(numSensorNeurons)]
@@ -36,4 +39,4 @@ numberOfGenerations = 1
 # numSensorNeurons = 6
 # numMotorNeurons = 12
 
-motorJointRange = 0.2
+motorJointRange = .9999999

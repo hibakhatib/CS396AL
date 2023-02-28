@@ -33,14 +33,20 @@ class SIMULATION:
         if self.directOrGUI == "GUI":
             time.sleep(1/400)
         for i in range(1000):
-            p.stepSimulation() 
+            p.stepSimulation()
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
             time.sleep(1/240)
             
-    def Get_Fitness(self):
-        self.robot.Get_Fitness()
+    def Get_Fitness(self, solutionID):
+        self.robot.Get_Fitness(solutionID)
+    
+    def Get_MotorValues(self, solutionID):
+        self.robot.Get_MotorValues(solutionID)
+        
+    def Get_NumLinks(self, solutionID):
+        self.robot.Get_NumLinks(solutionID)
         
     def __del__(self):
         p.disconnect()

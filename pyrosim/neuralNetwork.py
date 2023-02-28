@@ -123,3 +123,12 @@ class NEURAL_NETWORK:
                 self.neurons[neuronName].Print()
 
         print("")
+        
+    # def Save_MotorValues(self):
+    #     neuronDict = []
+    #     for neuronName in sorted(self.neurons):
+    #         if self.neurons[neuronName].Is_Motor_Neuron():
+    #             neuronDict[neuronName] = self.neurons[neuronName]
+                
+    
+            
