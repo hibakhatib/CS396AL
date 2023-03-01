@@ -14,6 +14,7 @@ class ROBOT:
         self.motors = {}
         self.sensors = {}
         self.solutionID = solutionID
+        self.countLimbs = list()
         self.robotId = p.loadURDF("body.urdf")
         self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
         os.system("del brain" + str(self.solutionID) + ".nndf")
@@ -22,6 +23,7 @@ class ROBOT:
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
+        
        
         
     def Prepare_To_Sense(self):
@@ -70,24 +72,21 @@ class ROBOT:
         f.write(str(xCoordinateOfLinkZero))
         f.close()
         
-    def Get_MotorValues(self, solutionID):
-        for neuronName in self.nn.Get_Neuron_Names():
-                if self.nn.Is_Motor_Neuron(neuronName):
-                    motorVals = str(self.nn.neurons[neuronName].Print())
-                    if None in motorVals:
-                        motorVals.replace('None', '')
-                    motorVals = motorVals.strip()
-                    print(motorVals)
-                    breakpoint()
-                    f = open("motor" + str(self.solutionID) + ".txt", "w")
-                    f.write(motorVals)
-                    f.close()
-                    
-    def Get_NumLinks(self, solutuionID):
-        for linkName in pyrosim.linkNamesToIndices:
-            print(linkName)
-            print(c.limbs)   
-            breakpoint()     
+    def limbCount(self):
+        self.countLimbs.append(len(pyrosim.linkNamesToIndices))
+        
+    # def Get_MotorValues(self, solutionID):
+    #     for neuronName in self.nn.Get_Neuron_Names():
+    #             if self.nn.Is_Motor_Neuron(neuronName):
+    #                 motorVals = str(self.nn.neurons[neuronName].Print())
+    #                 if None in motorVals:
+    #                     motorVals.replace('None', '')
+    #                 motorVals = motorVals.strip()
+    #                 print(motorVals)
+    #                 breakpoint()
+    #                 f = open("motor" + str(self.solutionID) + ".txt", "w")
+    #                 f.write(motorVals)
+    #                 f.close() 
             
         
         

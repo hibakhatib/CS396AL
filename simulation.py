@@ -31,7 +31,7 @@ class SIMULATION:
     
     def Run(self):
         if self.directOrGUI == "GUI":
-            time.sleep(1/400)
+            time.sleep(1/600)
         for i in range(1000):
             p.stepSimulation()
             self.robot.Sense(i)
@@ -42,11 +42,10 @@ class SIMULATION:
     def Get_Fitness(self, solutionID):
         self.robot.Get_Fitness(solutionID)
     
-    def Get_MotorValues(self, solutionID):
-        self.robot.Get_MotorValues(solutionID)
+
         
-    def Get_NumLinks(self, solutionID):
-        self.robot.Get_NumLinks(solutionID)
+    # def Get_NumLinks(self):
+    #     self.robot.countLimbs
         
     def __del__(self):
         p.disconnect()

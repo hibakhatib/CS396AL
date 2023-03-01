@@ -16,8 +16,6 @@ class PARALLEL_HILL_CLIMBER:
                 if file.startswith(f"fitness{id}"):
                     os.system(f"del fitness{id}.txt")
             
-            # os.system("del brain" + str(id) + ".nndf")
-            # os.system("del fitness" + str(id) + ".txt")
                 
         self.nextAvailableID = 0
         self.parents = {}
@@ -37,8 +35,8 @@ class PARALLEL_HILL_CLIMBER:
         self.Evaluate(self.children)
         self.Print()
         self.Select()
-        
-    
+            
+
     def Evaluate(self, solutions):
         for sol in range(c.population):
             solutions[sol].Start_Simulation("DIRECT")
@@ -59,7 +57,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Print(self):
         for parent in self.parents.keys():
-            print(f"parent fitness {self.parents[parent].fitness}")
+            print(f"\nparent fitness {self.parents[parent].fitness}")
         
         for child in self.children.keys():
             print(f"child fitness {self.children[child].fitness}")
@@ -68,12 +66,14 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents.keys():
             if self.parents[parent].fitness > self.children[parent].fitness:
                 self.parents[parent] = self.children[parent]
+                c.fitness1.append(self.children[parent].fitness)
+            else:
+                c.fitness1.append(self.parents[parent].fitness)
                 
-            if 
-            # if the number of links is smaller every time its better
-            
                 
     def Show_Best(self):
+        input("enter to both before/after")
+        self.parents[0].Start_Simulation("GUI")
         highest_fitness = 0
         for k in self.parents.keys():
             best = self.parents[k]
@@ -84,10 +84,3 @@ class PARALLEL_HILL_CLIMBER:
         best.Start_Simulation("GUI")
         
         
-    # def Show_Random(self):
-    #     i = len(self.parents.keys())
-    #     r = random.randint(0,i)
-    #     best_rand = self.parents[r-1]
-    #     best_rand.Start_Simulation("GUI")
-                
-
