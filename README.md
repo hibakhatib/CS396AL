@@ -9,14 +9,15 @@ After cloning this repo, run the command "python search.py" in your terminal. Th
 At the joints which connected the limb to the torso, the joint axis was both in the x direction and z direction. By having joints that are up/down and left/right, we are able to emulate hinge joints, like elbows or knees, and allows the body to move in a smoother way. 
 
 
-A brief video of the expected behavior can be found here: 
+A brief video of the expected behavior can be found here: https://youtu.be/WF7C2-TOuHo 
 
 5 fitness curves: 
 
 
-The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
 
-![IMG_0431](https://user-images.githubusercontent.com/98929421/220260494-29c6a12c-3b37-45d5-a190-75a0d08d7.jpg)
+The diagram below (attempts to) explain how bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
+
+
 
 
 Diagram of some of my planning/ideation:

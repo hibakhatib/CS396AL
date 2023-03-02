@@ -2,6 +2,7 @@ from solution import SOLUTION
 import constants as c
 import copy 
 import os
+import numpy as np
 import random
 
 
@@ -66,8 +67,12 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents.keys():
             if self.parents[parent].fitness > self.children[parent].fitness:
                 self.parents[parent] = self.children[parent]
+                with open("fitgen1.txt", "a") as text_file:
+                    text_file.write(str(self.children[parent].fitness) + "\n")
                 c.fitness1.append(self.children[parent].fitness)
             else:
+                with open("fitgen1.txt", "a") as text_file:
+                    text_file.write(str(self.parents[parent].fitness) + "\n")
                 c.fitness1.append(self.parents[parent].fitness)
                 
                 
