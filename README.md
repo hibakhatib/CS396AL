@@ -25,7 +25,7 @@ a morphospace describes the range of variation of the morphology of bodies and t
 I evolved five different creatures in populations of 25 for 100 generations. Below you can find fitness graphs to see how the fitness improves over generations.
 
 5 fitness curves: 
-![image](https://user-images.githubusercontent.com/98929421/222337819-59101dbb-0b9d-41fd-aa53-1e1f860e51.png)
+![image](https://user-images.githubusercontent.com/98929421/222529481-8a9f8af9-0cae-47e0-8a8a-f27bd298d12f.png)
 
 my bodies are now 3D. they do look sad but: 
 ![cats](https://user-images.githubusercontent.com/98929421/222337960-3f81bd2b-fcd1-44e3-9abb-79a45ca87af9.gif)
