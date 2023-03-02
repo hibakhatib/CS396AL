@@ -11,26 +11,27 @@ At the joints which connected the limb to the torso, the joint axis was both in 
 
 A brief video of the expected behavior can be found here: https://youtu.be/WF7C2-TOuHo 
 
-5 fitness curves: 
-
-
-
 The diagram below (attempts to) explain how bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
 
-
-
+![image](https://user-images.githubusercontent.com/98929421/222337819-59101dbb-0b9d-41fd-aa53-1e1f860eae51.png)
 
 Diagram of some of my planning/ideation:
 
 ![IMG_0430](https://user-images.githubusercontent.com/98929421/220260521-d31af8a6-e19c-41f1-848d-6cf28b2b6d97.jpg)
 
 
-
 a morphospace describes the range of variation of the morphology of bodies and their structures. In this morphospace, the body will always have a torso and a randomly generated number of legs only on the left and right side of the torso. The legs are always 
 
+I evolved five different creatures in populations of 25 for 100 generations. Below you can find fitness graphs to see how the fitness improves over generations.
+
+5 fitness curves: 
+![image](https://user-images.githubusercontent.com/98929421/222337819-59101dbb-0b9d-41fd-aa53-1e1f860e51.png)
+
+my bodies are now 3D. they do look sad but: 
+![cats](https://user-images.githubusercontent.com/98929421/222337960-3f81bd2b-fcd1-44e3-9abb-79a45ca87af9.gif)
 
 
-TO find out more about this project: 
+TO find out more about this project:
 
    This material builds on the MOOC found at this link: https://www.reddit.com/r/ludobots/
    find pyrosim physics engine here: https://github.com/jbongard/pyrosim 
