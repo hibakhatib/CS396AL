@@ -1,18 +1,18 @@
 ### CS396AL 
 
-For assignment 7, we created 3D bodies. In accordance to assignment details, all joints contain motors and every pair of neurons contains synpases.
+for assignment 8, I evolved my random 3D creature from A7. Limbs and sensors are randomly removed based on randomly generated values. Weights are also randomly changed. All joints contain motors and every pair of neurons contains synapses. 
 
 There is a motor for every joint but sensors are added randomly with a 50/50 chance for each link upon creation. I basically 'flipped' a coin to decide the body's fate. The blue indicates that the link does not contain sensors while the green indicates that the link does contain a sensor. 
 
-After cloning this repo, run the command "python search.py" in your terminal to see a new body. 
-Run the command everytime you wish to view a new body. All bodies should have a main torso or abdomen with a series of limbs which act as legs. 
+After cloning this repo, run the command "python search.py" in your terminal. The evolution runs and at the end of it, the computer waits for user to hit the enter key in order to show the first robot and then the evolved robot. 
 
 At the joints which connected the limb to the torso, the joint axis was both in the x direction and z direction. By having joints that are up/down and left/right, we are able to emulate hinge joints, like elbows or knees, and allows the body to move in a smoother way. 
 
 
-A brief video of the expected behavior can be found here: https://youtu.be/Qu6ia1WaUcQ
+A brief video of the expected behavior can be found here: 
 
-The clip shows the initial generation of random sized boxes at random positions, often overlapping and crowding. Eventually I repurposed old my hexapod to create a cleaner body with a random number of legs at positions which don't overlap. 
+5 fitness curves: 
+
 
 The diagram below (attempts to) explain how brains and bodies are generated in this morphospace, with basic recursion as demonstrated in lecture: 
 
@@ -25,16 +25,13 @@ Diagram of some of my planning/ideation:
 
 
 
-a morphospace describes the range of variation of the morphology of bodies and their structures. 
+a morphospace describes the range of variation of the morphology of bodies and their structures. In this morphospace, the body will always have a torso and a randomly generated number of legs only on the left and right side of the torso. The legs are always 
 
-Additionally, here is a gif of the best result from my trials (which honestly were not many 😬)
-
-![a7](https://user-images.githubusercontent.com/98929421/220257729-8bc0220b-6534-4b97-a6be-4038cafe569b.gif)
 
 
 TO find out more about this project: 
 
    This material builds on the MOOC found at this link: https://www.reddit.com/r/ludobots/
-   find pyrosim here: https://github.com/jbongard/pyrosim 
+   find pyrosim physics engine here: https://github.com/jbongard/pyrosim 
   
    This specific project is not found on the ludobots subreddit but is course material from CS396 Artificial Life taught at Northwestern University by Professor Sam Kriegman. This class aims to contribute to the field of evolutionary robotics. 
